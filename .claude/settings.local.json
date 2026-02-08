@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node ace list:*)",
+      "Bash(npm install:*)",
+      "Bash(node ace:*)",
+      "Bash(psql:*)",
+      "Bash(npm run typecheck:*)"
+    ]
+  }
+}
