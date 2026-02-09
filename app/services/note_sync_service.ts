@@ -14,6 +14,9 @@ export default class NoteSyncService {
     if (!item.name || !item.name.endsWith('.md')) return null
 
     const note = this.repository.parseContent(item.content || '')
+
+    if (!note.title && !note.body) return null
+
     const tagNames = await this.repository.getTagNames(item.jop_id)
 
     const result = await this.postgrest.upsertNote({

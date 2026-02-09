@@ -28,6 +28,7 @@ jobs:
           node ace build
           cd build
           npm ci --omit=dev
+          ln -sf /root/joplin-adonis/.env .env
           cd ..
-          pm2 restart ecosystem.config.cjs || pm2 start ecosystem.config.cjs
+          pm2 restart ecosystem.config.cjs
           "
