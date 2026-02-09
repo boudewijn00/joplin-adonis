@@ -24,9 +24,9 @@ export default class NoteSyncService {
       created_time: note.created_time,
       order_id: note.order,
       tags: tagNames,
-      is_todo: note.is_todo,
-      todo_due: note.todo_due,
-      todo_completed: note.todo_completed,
+      is_todo: note.is_todo || false,
+      todo_due: note.todo_due || false,
+      todo_completed: note.todo_completed || false,
     })
 
     return result
