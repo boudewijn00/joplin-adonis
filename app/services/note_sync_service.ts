@@ -28,7 +28,7 @@ export default class NoteSyncService {
       body: note.body,
       parent_id: item.jop_parent_id,
       created_time: note.created_time,
-      order_id: note.order,
+      order_id: Math.round(note.order),
       tags: tagNames,
       is_todo: note.is_todo || false,
       todo_due: note.todo_due || false,
