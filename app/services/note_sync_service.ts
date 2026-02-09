@@ -1,5 +1,6 @@
 import type JoplinItemRepository from '#services/joplin_item_repository'
 import type PostgrestClient from '#services/postgrest_client'
+import ParseLink from '#services/parse_link'
 
 export default class NoteSyncService {
   constructor(
@@ -22,6 +23,9 @@ export default class NoteSyncService {
 
     const tagNames = await this.repository.getTagNames(item.jop_id)
 
+    const parseLink = new ParseLink()
+    const article = await parseLink.parseLink(note.body)
+
     const result = await this.postgrest.upsertNote({
       note_id: item.jop_id,
       title: note.title,
@@ -33,6 +37,10 @@ export default class NoteSyncService {
       is_todo: note.is_todo || false,
       todo_due: note.todo_due || false,
       todo_completed: note.todo_completed || false,
+      link_content: article?.textContent || null,
+      link_length: article?.textContent.length || null,
+      link_excerpt: article?.excerpt || null,
+      link_by_line: article?.byline || null,
     })
 
     return result
