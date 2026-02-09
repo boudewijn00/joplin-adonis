@@ -4,6 +4,22 @@ export default class PostgrestClient {
     private token: string
   ) {}
 
+  async getFolderIds(): Promise<string[]> {
+    const response = await fetch(`${this.host}/folders?select=folder_id`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch folders: ${response.status} ${await response.text()}`)
+    }
+
+    const folders = (await response.json()) as { folder_id: string }[]
+    return folders.map((f) => f.folder_id)
+  }
+
   async upsertNote(notePayload: Record<string, unknown>): Promise<'created' | 'updated'> {
     const response = await fetch(`${this.host}/notes?on_conflict=note_id`, {
       method: 'POST',

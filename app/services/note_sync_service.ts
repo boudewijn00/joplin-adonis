@@ -17,6 +17,9 @@ export default class NoteSyncService {
 
     if (!note.title && !note.body) return null
 
+    const folderIds = await this.postgrest.getFolderIds()
+    if (!folderIds.includes(item.jop_parent_id)) return null
+
     const tagNames = await this.repository.getTagNames(item.jop_id)
 
     const result = await this.postgrest.upsertNote({
